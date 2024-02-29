@@ -48,14 +48,15 @@ il6r_clumped <- crp %>%
   select(SNP = variant_id, effect_allele.exposure = effect_allele, other_allele.exposure = other_allele, beta.exposure = beta, se.exposure = standard_error, pval.exposure = p_value) %>%
   as_tibble() %>%
   mutate(eaf.exposure = NA) %>%
-  mutate(exposure ="IL-6", id.exposure = "IL-6") %>%
+  mutate(exposure ="IL-6R", id.exposure = "IL-6R") %>%
   mutate(pval.exposure = as.numeric(pval.exposure)) %>%
   filter(pval.exposure < 5e-8)  %>%
   clump_data(clump_r2 = 0.01)
 
+il6r_rs2228145 <- subset(crp, variant_id=="rs2228145")
 
 # Save results
 setwd(OUTPUT)
 write.table(crp_clumped,  file = "CHARGEUKB_crp_cis.txt")
 write.table(il6r_clumped,  file = "CHARGEUKB_il6r_cis.txt")
-
+write.table(il6r_rs2228145, file = "CHARGEUKB_il6r_rs2228145.txt")
